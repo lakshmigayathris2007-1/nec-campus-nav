@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <title>NEC Campus Navigator — National Engineering College, Kovilpatti</title>
+  <meta name="description" content="Interactive smart campus navigation assistant for National Engineering College, Kovilpatti with real-time shortest-route pathfinding." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===================== TOP BAR ===================== -->
+  <header class="topbar">
+    <button id="mobile-menu-btn" class="icon-btn mobile-only" aria-label="Toggle menu">☰</button>
+    <div class="brand">
+      <span class="brand-mark">🧭</span>
+      <div class="brand-text">
+        <strong>NEC Campus Navigator</strong>
+        <span>National Engineering College, Kovilpatti</span>
+      </div>
+    </div>
+    <button id="theme-toggle" class="btn btn-ghost">🌙 Dark Mode</button>
+  </header>
+
+  <div class="app-shell">
+
+    <!-- ===================== SIDEBAR ===================== -->
+    <aside class="sidebar">
+      <nav class="sidebar-tabs">
+        <button class="sidebar-tab active" data-panel="panel-navigate">🧭 <span>Navigate</span></button>
+        <button class="sidebar-tab" data-panel="panel-search">🔍 <span>Search</span></button>
+        <button class="sidebar-tab" data-panel="panel-legend">🎨 <span>Legend</span></button>
+        <button class="sidebar-tab" data-panel="panel-stats">📊 <span>Stats</span></button>
+        <button class="sidebar-tab" data-panel="panel-emergency">🚨 <span>Emergency</span></button>
+      </nav>
+
+      <div class="sidebar-panels">
+
+        <!-- NAVIGATE -->
+        <section id="panel-navigate" class="side-panel active">
+          <h2>Plan a Route</h2>
+
+          <label class="field-label" for="current-select">Current Location</label>
+          <select id="current-select" class="select-field"></select>
+
+          <button id="swap-locations-btn" class="btn btn-swap" title="Swap current &amp; destination">⇅ Swap</button>
+
+          <label class="field-label" for="destination-select">Destination</label>
+          <select id="destination-select" class="select-field"></select>
+
+          <div class="form-actions">
+            <button id="find-route-btn" class="btn btn-primary btn-block">Find Shortest Route</button>
+            <button id="reset-route-btn" class="btn btn-secondary btn-block">Reset</button>
+          </div>
+
+          <div id="route-info-panel" class="route-info-panel"></div>
+        </section>
+
+        <!-- SEARCH -->
+        <section id="panel-search" class="side-panel">
+          <h2>Search Campus</h2>
+          <div class="search-box">
+            <input id="search-input" type="text" placeholder="Search any building, room, or facility…" autocomplete="off" />
+            <div id="search-suggestions" class="search-suggestions"></div>
+          </div>
+          <p class="hint-text">Tap a result to view details, then set it as your current location or destination.</p>
+        </section>
+
+        <!-- LEGEND -->
+        <section id="panel-legend" class="side-panel">
+          <h2>Map Legend</h2>
+          <div id="legend-panel" class="legend-panel"></div>
+        </section>
+
+        <!-- STATS -->
+        <section id="panel-stats" class="side-panel">
+          <h2>Campus Statistics</h2>
+          <div id="stats-panel" class="stats-panel"></div>
+        </section>
+
+        <!-- EMERGENCY -->
+        <section id="panel-emergency" class="side-panel">
+          <h2>Emergency Contacts</h2>
+          <p class="hint-text hint-warning">⚠️ Sample directory — replace with verified campus numbers before real-world use.</p>
+          <ul class="emergency-list">
+            <li><span class="emergency-icon">🚑</span><div><strong>Medical / First Aid Room</strong><small>+91 4632-XXX-101</small></div></li>
+            <li><span class="emergency-icon">🛡️</span><div><strong>Campus Security Control Room</strong><small>+91 4632-XXX-102</small></div></li>
+            <li><span class="emergency-icon">🚒</span><div><strong>Fire &amp; Safety Officer</strong><small>+91 4632-XXX-103</small></div></li>
+            <li><span class="emergency-icon">🚌</span><div><strong>Transport / Bus Coordinator</strong><small>+91 4632-XXX-104</small></div></li>
+            <li><span class="emergency-icon">🏢</span><div><strong>Principal Office</strong><small>+91 4632-XXX-105</small></div></li>
+            <li><span class="emergency-icon">👮</span><div><strong>Kovilpatti Police Station</strong><small>100</small></div></li>
+          </ul>
+        </section>
+
+      </div>
+    </aside>
+
+    <!-- ===================== MAP AREA ===================== -->
+    <main class="map-area">
+      <div class="map-toolbar">
+        <div class="toolbar-group">
+          <button id="zoom-in" class="icon-btn" title="Zoom in">➕</button>
+          <button id="zoom-out" class="icon-btn" title="Zoom out">➖</button>
+          <button id="zoom-reset" class="icon-btn" title="Reset view">⟲</button>
+        </div>
+        <div class="toolbar-hint">Drag to pan · Scroll to zoom</div>
+      </div>
+
+      <div id="map-viewport" class="map-viewport">
+        <svg id="campus-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+      </div>
+    </main>
+
+  </div>
+
+  <!-- ===================== INFO POPUP ===================== -->
+  <div id="info-popup-backdrop" class="popup-backdrop"></div>
+  <div id="info-popup" class="info-popup"></div>
+
+  <footer class="app-footer">
+    <span>© <span id="current-year"></span> NEC Campus Navigator — Final Year Mini Project</span>
+    <span>Built with HTML · CSS · Vanilla JS · No external map APIs</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
